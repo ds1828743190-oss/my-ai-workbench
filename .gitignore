@@ -1,0 +1,28 @@
+# ===== 凭据与缓存（永不上传）=====
+.neodata_token
+*.token
+.env
+.env.*
+**/credentials*.json
+**/secrets*.yml
+
+# ===== 真实数据（只存本地）=====
+投资台账.xlsx
+**/投资台账.xlsx
+deliverables/
+*.trades.csv
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# ===== macOS / 编辑器 =====
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
