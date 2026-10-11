@@ -117,16 +117,37 @@ def bond_10y() -> dict:
             "yield_10y_pct": round(float(last[col[0]]), 4)}
 
 def etf_quote(code: str) -> dict:
-    """ETF/场内基金最新行情（东财口径）。如红利低波 510890、国债ETF 511010。"""
+    """ETF/场内基金最新行情。回退链：新浪 → 东财。如红利低波 510890、国债ETF 511010。"""
     ak = _need_akshare()
-    df = ak.fund_etf_spot_em()
-    row = df[df["代码"].astype(str) == code.strip()]
-    if row.empty:
-        raise LookupError(f"未找到 ETF {code}")
-    r = row.iloc[0].to_dict()
-    return {"source": SOURCE["etf"], "date": str(datetime.date.today()),
-            "code": code, "name": r.get("名称"), "close": r.get("最新价"),
-            "change_pct": r.get("涨跌幅")}
+    c = code.strip().lower()
+    if not c.startswith(("sh", "sz")):
+        c = ("sh" if c[0] in "56" else "sz") + c
+    errors = []
+    # ① 新浪（列表口径，稳定）
+    try:
+        df = ak.fund_etf_category_sina(symbol="ETF基金")
+        row = df[df["代码"].astype(str).str.lower() == c]
+        if row.empty:
+            raise LookupError(f"新浪列表中未找到 {c}")
+        r = row.iloc[0].to_dict()
+        return {"source": "AKShare: fund_etf_category_sina", "date": str(datetime.date.today()),
+                "code": c, "name": r.get("名称"), "close": r.get("最新价"),
+                "change_pct": r.get("涨跌幅")}
+    except Exception as e:  # noqa: BLE001
+        errors.append(f"sina: {e}")
+    # ② 东财（实时，个别网络环境可能被代理阻断）
+    try:
+        df = ak.fund_etf_spot_em()
+        row = df[df["代码"].astype(str) == c[2:]]
+        if row.empty:
+            raise LookupError(f"东财列表中未找到 {c}")
+        r = row.iloc[0].to_dict()
+        return {"source": "AKShare: fund_etf_spot_em", "date": str(datetime.date.today()),
+                "code": c, "name": r.get("名称"), "close": r.get("最新价"),
+                "change_pct": r.get("涨跌幅")}
+    except Exception as e:  # noqa: BLE001
+        errors.append(f"em: {e}")
+    raise RuntimeError("；".join(errors) + "；可降级其他源并在产出中标注")
 
 def selftest():
     """逐项自检：全部输出结构化结果或明确的降级说明。"""
