@@ -74,20 +74,35 @@ def index_daily(symbol: str, days: int = 60) -> list[dict]:
     return {"source": SOURCE["index_daily"], "code": code, "bars": out}
 
 def index_pe(name: str = "沪深300") -> dict:
-    """指数 PE(TTM)。指数不带前缀；正常范围 11~16 倍（离谱值直接弃用）。"""
+    """指数 PE。回退链：中证官方口径 → 乐咕口径。
+    注意：两口径数值可差 ~0.5-1 倍（计算方式/样本不同）；核心策略流程请按
+    「数据源交叉印证协议」与中证网/证券时报/每经媒体口径互验（正常范围 11~16 倍）。"""
     ak = _need_akshare()
+    errors = []
+    # ① 中证指数官方估值（口径最权威；更新可能滞后，返回值含日期）
+    code = {"沪深300": "000300", "上证50": "000016", "中证500": "000905", "中证1000": "000852"}.get(name, name)
     try:
-        df = ak.index_value_hist_funddb(symbol=name, indicator="市盈率")
+        df = ak.stock_zh_index_value_csindex(symbol=code)
+        df = df.sort_values("日期")           # 该接口默认降序，统一升序后取最新
+        last = df.iloc[-1]
+        return {"source": "AKShare: stock_zh_index_value_csindex（中证官方口径）",
+                "date": str(last["日期"]), "index": name,
+                "pe_1": float(last["市盈率1"]), "pe_2": float(last["市盈率2"]),
+                "dividend_yield_1": float(last["股息率1"]),
+                "note": "中证官方口径；若日期滞后（>5 交易日）请以媒体三源口径互验"}
     except Exception as e:  # noqa: BLE001
-        raise RuntimeError(f"funddb 接口失败（{e}）；可降级联网搜「{name} 市盈率 TTM」"
-                           f"（以中证网/证券时报/每经口径为准）") from e
-    last = df.tail(1).iloc[0]
-    val = float(last.iloc[-1])
-    flag = ""
-    if not (5 <= val <= 40):
-        flag = " ⚠️ 数值极端，建议弃用并换源复核"
-    return {"source": SOURCE["index_pe"] + f"（{name}）", "date": str(last.iloc[0]),
-            "pe_ttm": round(val, 2), "note": f"正常范围 11~16 倍{flag}"}
+        errors.append(f"csindex: {e}")
+    # ② 乐咕口径（滚动市盈率，更新较快；数值与媒体口径或存差异）
+    try:
+        df = ak.stock_index_pe_lg(symbol=name)
+        last = df.tail(1).iloc[0]
+        return {"source": "AKShare: stock_index_pe_lg（乐咕口径）",
+                "date": str(last["日期"]), "index": name,
+                "pe_ttm": float(last["滚动市盈率"]), "pe_static": float(last["静态市盈率"]),
+                "note": "乐咕滚动市盈率；与中证网/证券时报口径可能相差 0.5~1，需互验后采用"}
+    except Exception as e:  # noqa: BLE001
+        errors.append(f"lg: {e}")
+    raise RuntimeError("；".join(errors) + f"；可降级联网搜「{name} 市盈率 TTM」（以中证网/证券时报/每经口径为准）")
 
 def bond_10y() -> dict:
     """中债国债收益率曲线 10 年期（官方口径）。"""
@@ -138,6 +153,7 @@ def selftest():
 
 def main():
     p = argparse.ArgumentParser(description="data-layer 开源适配（AKShare 优先）")
+    p.add_argument("--selftest", action="store_true", help="逐项自检（等价于 selftest 子命令）")
     sub = p.add_subparsers(dest="cmd")
     sp = sub.add_parser("index-quote"); sp.add_argument("symbol")
     sp = sub.add_parser("index-daily"); sp.add_argument("symbol"); sp.add_argument("--days", type=int, default=60)
