@@ -30,7 +30,7 @@ Phase 4  汇编落盘   ── 主理人整合成结构化报告（含信号聚�
 |---|---|---|
 | 主理人 | `../experts/leads/hedge-fund-lead.md`（贺知衡） | 只做编排与汇编，不代写 |
 | Phase 1 大师池（13） | `../experts/masters/` 下 13 位传奇人格 | oracle-of-omaha / charlie-munger / magellan-captain / the-big-short / black-swan-prophet / mama-wood / ben-graham / wall-street-activist / macro-king / dhandho-master / phil-fisher / dean-of-valuation / rakesh-jhunjhunwala |
-| Phase 1 分析师池（6） | `../experts/masters/` 下 6 份分析师 | fundamentals / technicals / valuation / sentiment / growth / news-sentiment |
+| Phase 1 分析师池（6） | 3 位共用（`../experts/analysts/`：market-analyst / fundamentals-analyst / sentiment-analyst）+ 3 位独有（`../experts/masters/`：valuation-analyst-dcf / growth-analyst / news-sentiment-analyst） | 技术 / 基本面 / 情绪 / 估值 / 成长 / 新闻情绪 |
 | Phase 2 风险官 | `../experts/leads/risk-manager_funnel.md`（严控风·大师版） | ⚠️ 与 analysts/risk-manager.md（交易版）不同，不可互换 |
 | Phase 3 组合经理 | `../experts/leads/portfolio-manager.md`（裴持衡） | 输入 = N 份信号 + 风险报告 |
 

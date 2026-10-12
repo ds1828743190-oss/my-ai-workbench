@@ -13,7 +13,7 @@
 
 ```
 experts/
-├── masters/     流派人格 —— 13 位传奇大师 + 6 位大师队专业分析师（共 19 份）
+├── masters/     流派人格 —— 13 位传奇大师 + 3 位独有分析师（共 16 份；技术/基本面/情绪 3 位与 analysts/ 共用）
 ├── analysts/    职能分析师 —— A股团队 7 位 + 交易团队 12 位（去重后各留一份，共 19 份）
 ├── roundtable/  圆桌人格 —— 6 位源自真实股民访谈的专家（共 6 份）
 └── leads/       主理人与管理席位 —— 4 位主理人 + funnel 队风险/组合经理（共 6 份）
@@ -29,7 +29,7 @@ experts/
 
 ## 二、三类人格清单
 
-### 2.1 masters/ · 流派人格（13 传奇 + 6 分析师）
+### 2.1 masters/ · 流派人格（13 传奇 + 3 独有分析师）
 
 | 文件 | 代号 | 流派 / 维度 | 核心指标与方法 |
 |---|---|---|---|
@@ -46,13 +46,11 @@ experts/
 | phil-fisher.md | 费雪 | 成长品质 | 研发创新、管理层质量、利润率一致性 |
 | dean-of-valuation.md | 估值教父 | 严谨估值 | FCFF DCF、WACC、相对估值、情景分析 |
 | rakesh-jhunjhunwala.md | 金君瓦拉 | 新兴市场成长 | 成长 + 安全边际>30%、ROE>15% |
-| fundamentals-analyst.md | — | 基本面分析 | ROE、净利率、营业利润率、P/E、P/B |
-| technicals-analyst.md | — | 技术面分析 | 趋势（EMA）、动量（RSI）、均值回归、波动率 |
-| valuation-analyst.md | — | 估值分析（DCF 口径） | DCF、EV/EBITDA、剩余收益模型、安全边际 |
-| sentiment-analyst.md | — | 情绪分析 | 内部人交易、新闻情绪、机构评级 |
+| valuation-analyst-dcf.md | — | 估值分析（DCF 口径） | DCF、EV/EBITDA、剩余收益模型、安全边际 |
 | growth-analyst.md | — | 成长分析 | 营收/EPS/FCF 增长率、PEG、利润率扩张 |
 | news-sentiment-analyst.md | — | 新闻情绪 | 新闻正负面分布、行业动态、宏观环境 |
 
+> 注：技术面 / 基本面 / 情绪面 3 位分析师已**整合为唯一版本**（`../analysts/` 下 market-analyst / fundamentals-analyst / sentiment-analyst），funnel 与对抗两条流程共用，不再在 masters/ 保留副本。
 > 用途：`funnel-pipeline` 模式的 19 人并行池 + 单点"用 XX 的方法分析"深聊。
 
 ### 2.2 analysts/ · 职能分析师（19 份）
@@ -138,7 +136,7 @@ experts/
 | 信号派首席 vs 短线冲浪手 | 都看资金和消息：前者是**周/月级趋势信号**；后者是**天级盘面信号** |
 | 估值分析师 vs 逆向投资人 | 都买便宜的大公司：前者用 **PE Bands 精确定价**看盈利变化；后者用**支撑位+历史 PE 模糊判断**看价格高低 |
 
-同理，masters/ 与 analysts/ 同名文件（如两个 `fundamentals-analyst.md`）是**不同队编的版本**：masters/ 版服务于 funnel 的 19 人池，analysts/ 版（季本实）服务于对抗辩论与日常路由——引用时按模式卡指定的路径来。
+注：技术面 / 基本面 / 情绪面三位分析师已整合为**唯一版本**（`analysts/` 下的 market-analyst / fundamentals-analyst / sentiment-analyst），funnel 与对抗两条流程共用；`masters/valuation-analyst-dcf`（DCF 口径）与 `roundtable/valuation-analyst`（文衡价·PE Bands 口径）是两个不同估值框架，引用时按模式卡指定的路径来。
 
 ---
 
