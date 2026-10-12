@@ -1,5 +1,9 @@
 # 人格库 · 索引与规范
 
+> ⚠️ **可选深度模式（默认不启用）**：本仓库投资的默认工作方式已切换为 `../expert-package/`（多技能专家包，无固定人格）。
+> 本目录仅在需要"多视角人格对抗/流派框架"的深度分析时启用；日常问题请走 expert-package。
+> 若确定不需要，可整体删除本目录与 `../workflows/`（历史保留在 git 中即可）。
+
 > 位置：`investing-os/experts/` ｜ 全部为纯 Markdown，可自由改裁
 > 每个 `.md` 是一个可独立加载的"专家脑"（System Prompt）：头部 frontmatter 保留 `name / displayName / profession / description`，任何支持 skill/agent 路由的框架都能直接解析。
 
