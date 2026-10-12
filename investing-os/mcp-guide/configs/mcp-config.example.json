@@ -1,0 +1,36 @@
+{
+  "_说明": "MCP 配置模板（占位符版，勿直接提交真实凭据）。复制到你所用客户端的 MCP 配置文件后，替换 <...> 内容并删除本 _说明 字段。客户端位置：Claude Desktop=claude_desktop_config.json；Cursor=.cursor/mcp.json；WorkBuddy=连接器管理页；自研=Client 代码读取。",
+  "mcpServers": {
+    "neodata": {
+      "_说明": "金融数据主源。多数环境以官方连接器形式接入（授权绑定账号）；自研环境按服务商文档填写 url 与 headers。",
+      "url": "https://<服务商提供的MCP端点>/mcp",
+      "headers": { "Authorization": "Bearer <你的独立凭据>" }
+    },
+    "westock": {
+      "_说明": "腾讯自选股。行情主源 + 选股引擎。",
+      "url": "https://<服务商提供的MCP端点>/mcp",
+      "headers": { "Authorization": "Bearer <你的独立凭据>" }
+    },
+    "dzh": {
+      "_说明": "大智慧（个股级备用源；指数PE字段禁用）。",
+      "url": "https://<服务商提供的MCP端点>/mcp",
+      "headers": { "Authorization": "Bearer <你的独立凭据>" }
+    },
+    "yanxu": {
+      "_说明": "言序·公众号发布（建稿到草稿箱）。",
+      "url": "https://<服务商提供的MCP端点>/mcp",
+      "headers": { "Authorization": "Bearer <你的独立凭据>" }
+    },
+    "agent-mail": {
+      "_说明": "智能体邮箱（报告投递/订阅接收）。",
+      "url": "https://<服务商提供的MCP端点>/mcp",
+      "headers": { "Authorization": "Bearer <你的独立凭据>" }
+    },
+    "local-filesystem-example": {
+      "_说明": "stdio 本地进程式示例（若需接入本地工具服务，按此格式）。",
+      "command": "npx",
+      "args": ["-y", "@your-org/your-mcp-server@latest"],
+      "env": { "API_KEY": "<你的凭据>" }
+    }
+  }
+}

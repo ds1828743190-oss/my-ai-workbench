@@ -15,7 +15,7 @@
    │  ① 先过「PM 七问」，决定此单是研究单还是监控项
    │  ② 按「职责 → 技能 → 触发词」对照表命中技能
    ▼
-按需加载 1 个交付物技能（skills/research-deliverables/<name>/SKILL.md）
+按需加载 1 个交付物技能（skills/equity-research/deliverables/<name>/SKILL.md）
    │  技能自带 references/（模板与检查清单）二级加载
    ▼
 产出（HTML 独立报告 / Markdown 结构化 / 对话式——按交付物框架三级优先级选）
@@ -29,7 +29,7 @@
 | 席位 | 指点到 |
 |---|---|
 | 主专家（常驻） | 本卡 §三 的主提示词 + §四 的规则要点（并入 `workbenches/investment/` 的分析纪律） |
-| 交付物技能（按需） | `../../skills/research-deliverables/` 下 8 个技能（每个含 SKILL.md，部分含 references/） |
+| 交付物技能（按需） | `../../skills/equity-research/deliverables/` 下 16 个技能（每个含 SKILL.md，部分含 references/） |
 | 数据层 | `../../skills/data-layer/`（取数契约与纪律） |
 
 ## 三、主提示词（常驻部分）
@@ -94,7 +94,7 @@
 
 ```python
 SYSTEM = read("experts 主提示词") + read("本卡 §四 全部纪律")
-SKILLS = {name: read(f"skills/research-deliverables/{name}/SKILL.md") for name in ROUTE_TABLE}
+SKILLS = {name: read(f"skills/equity-research/deliverables/{name}/SKILL.md") for name in ROUTE_TABLE}
 
 # 对话循环：先只给模型"技能目录表"；模型输出需要某技能时，下一轮注入：
 def on_skill_triggered(name):

@@ -11,7 +11,8 @@
 |---|---|---|---|
 | **L0 宪法层** | `workbenches/` | 定义"我是谁、按什么规则做事"——跨平台最小可用内核 | 14 文件 |
 | **L1 专家包层（默认核心）** | `investing-os/expert-package/` | **多技能投资策略专家包（无固定人格）**：情景路由 + 8 技能模块 + 输出协议 | 11 文件 |
-| **L2 技能层** | `investing-os/skills/` | 专家包的执行底座：数据层 / 研报交付物 8 件 / md-to-html 渲染 / 分发 | 34 文件 |
+| **L2 技能层** | `investing-os/skills/` | 执行底座：**equity-research（股票研究 16 交付物）** / **trading-analysis（交易决策五阶段）** / data-layer / md-to-html / distribution | 60+ 文件 |
+| **L2.5 MCP 接入层** | `investing-os/mcp-guide/` | MCP 配置方法 + 五大连接器清单 + 工具调用规范 + 降级链 | 2 文件 |
 | **L3 量化工具层** | `quant-tools/` | 可本地真实运行的 Python 工具链（GPL-3.0）：复现 / 过拟合检验 / tearsheet | 44 文件 |
 | **L4 演化层** | `personal/` | 观点蒸馏卡 + 策略候选区（越用越像"我"） | 3 文件起步 |
 | **L5 文档档案层** | `docs/` | 移植指南归档、plugin 清单、设计文档、核对表、验证记录 | 40+ 文件 |
@@ -19,15 +20,16 @@
 
 ## 一次典型使用（文件如何流转）
 
-**日常策略问答**："红利 ETF 怎么选？" → L1 专家包识别情景（ETF 选品）→ 加载 `modules/03-ETF策略.md`（+ 05 风控、08 合规）→ 按 L2 数据层纪律取数对比 → 输出九段式方案（条件化规则 + 验证 + 失效条件）。量化问题同理：`modules/01` + L3 三件套实跑验证。
-**个人日常执行**："今日简报 / 记一笔交易 / 月度复盘" → L0 工作台管家（股债利差定投宪法）。
+**研究报告类**："分析一下 XX 股票" → L1 专家包识别情景 → 加载 L2 `equity-research/SKILL.md` → PM 七问 → 路由到 1 个交付物技能（如速览卡）→ 按 MCP/数据层纪律取数 → 输出研究报告（HTML 可选经 md-to-html 渲染）。
+**交易决策类**："XX 该不该买" → L2 `trading-analysis/SKILL.md` → 五阶段（四维分析→多空论证→交易方案→风险评审）→ BUY/SELL/HOLD + 价位/仓位。
+**量化验证**：`modules/01` + L3 三件套实跑。**个人日常**："今日简报 / 记账 / 复盘" → L0 工作台管家。
 
 ## 快速开始
 
 1. **轻环境（任何 AI）**：`investing-os/expert-package/SKILL.md` 整段粘贴到首条消息（策略问答）；或 `workbenches/investment/prompt.md`（个人日常执行）；
 2. **WorkBuddy / Claude Code**：专家包目录导入为技能（SKILL.md 入口，modules/ 按需加载）；`quant-tools/` 各技能自带 `agents/portable-loader.md`；
 3. **个人日常**：`workbenches/` 提示词 + 台账模板 + 数据源协议；
-4. **想看体系全貌**：`docs/设计文档-移植内容整合方案-v1.2.md`（底层蓝图）+ `docs/设计文档-专家包改版说明.md`（2026-10-12 默认核心改版记录）。
+4. **想看体系全貌**：`docs/设计文档-Skills与MCP重构说明.md`（最新结构）+ `docs/设计文档-专家包改版说明.md` + `docs/设计文档-移植内容整合方案-v1.2.md`（底层蓝图）。
 
 ## 核心原则
 
@@ -44,5 +46,6 @@
 
 ## 更新日志
 
+- 2026-10-12 v1.2 Skills+MCP 重构：以「研股股」「交易分析团队」为主干建立两个去人格化工作流技能包（`equity-research` 研究 16 交付物 / `trading-analysis` 交易五阶段）；新增 `mcp-guide`（MCP 接入与工具调用规范）。
 - 2026-10-12 v1.1 默认核心改版：新增「多技能投资策略专家包」（expert-package，无固定人格）；人格库 + 编排卡降级为可选深度模式（默认不启用）。
 - 2026-10-11 v1.0 首次构建：七层体系落库（workbenches / experts / workflows / skills / quant-tools / personal / docs）。

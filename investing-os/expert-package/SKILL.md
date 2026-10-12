@@ -151,9 +151,11 @@ description: 多技能投资策略专家包（无固定人格版）。按情景�
 | 模块 | 可调用的仓库资产 | 路径 |
 |---|---|---|
 | 量化策略 | 量化三件套：研报复现 / 过拟合检验（DSR·PBO·Haircut·MinTRL）/ 绩效 tearsheet（JSON+HTML） | `../../quant-tools/` |
-| 股票研究 | 交付物技能 8 件（速览/晨会/首次覆盖/财报/Comps/DCF/事件/逻辑跟踪）+ 估值方法论 | `../skills/research-deliverables/` |
+| 股票研究 | **股票研究工作流（16 类交付物技能 + 3 份规则）** | `../skills/equity-research/` |
+| 交易决策 | **交易分析工作流（五阶段：四维→多空→方案→风险评审→报告，出 BUY/SELL/HOLD）** | `../skills/trading-analysis/` |
 | ETF 策略 | 数据层（指数行情/ETF 双源报价/官方 PE/10Y 国债）+ 工作台选品卡/信号卡模板 | `../skills/data-layer/`、`../../workbenches/investment/` |
 | 全部模块 | 数据层统一契约与取数纪律八条（来源可追溯、诚实降级） | `../skills/data-layer/README.md` |
+| MCP 接入 | **MCP 配置方法 + 五大连接器清单 + 工具调用规范 + 降级链** | `../mcp-guide/README.md` |
 | 报告交付 | HTML 渲染管线（body 片段 → 单文件分享页） | `../skills/md-to-html/` |
 | 分发 | 公众号（言序）/ 邮箱（agent-mail）能力卡 | `../skills/distribution/` |
 
